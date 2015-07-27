@@ -52,8 +52,6 @@ RUN mkdir /opt/mesos_test_cluster
 ADD ./run.sh /opt/mesos_test_cluster/
 RUN chmod +x /opt/mesos_test_cluster/run.sh
 
-VOLUME /var/lib/docker
-
 # Add Supervisor
 
 # Update the base image
