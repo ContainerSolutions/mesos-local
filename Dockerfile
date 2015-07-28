@@ -67,4 +67,6 @@ RUN mkdir -p /var/log/supervisor /etc/supervisor/conf.d
 # Add the base configuration file for Supervisord
 ADD supervisor.conf /etc/supervisor.conf
 
+VOLUME /var/lib/docker
+
 CMD /opt/mesos_test_cluster/run.sh
