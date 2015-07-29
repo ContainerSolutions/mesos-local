@@ -1,5 +1,5 @@
 FROM ubuntu
-MAINTAINER RedJack, LLC
+MAINTAINER Container Solutions
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV VERSION 0.22.1
