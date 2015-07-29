@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM containersol/dind
 MAINTAINER Container Solutions BV
 
 ENV DEBIAN_FRONTEND noninteractive
