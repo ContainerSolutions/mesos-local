@@ -33,7 +33,7 @@ ADD ./run.sh /opt/mesos_test_cluster/
 RUN chmod +x /opt/mesos_test_cluster/run.sh
 
 # Install Supervisord
-RUN apt-get install -qq supervisor
+RUN apt-get install -qqy supervisor
 
 # Make the necessary folders for Supervisord
 RUN mkdir -p /var/log/supervisor /etc/supervisor/conf.d
@@ -43,4 +43,3 @@ ADD supervisor.conf /etc/supervisor.conf
 
 # add slave configuration
 CMD /opt/mesos_test_cluster/run.sh
-ENTRYPOINT supervisord -c /etc/supervisor.conf -e error

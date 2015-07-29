@@ -24,6 +24,6 @@ do
 done
 
 sed -i s/@@NUM_SLAVES@@/${NUMBER_OF_SLAVES}/g /etc/supervisor.conf
-supervisord -c /etc/supervisor.conf
+supervisord -c /etc/supervisor.conf -e error
 
 
