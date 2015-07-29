@@ -1,5 +1,5 @@
-FROM containersol/dind
-MAINTAINER ContainerSolutions <dev@container-solutions.com>
+FROM ubuntu
+MAINTAINER Container Solutions BV
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV VERSION 0.22.1
