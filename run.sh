@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Workaround for https://github.com/jpetazzo/dind/issues/86
+rm -rf /var/lib/docker/btrfs
+
 IFACE='eth0'
 IP=$(ip -4 address show $IFACE | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/')
 
