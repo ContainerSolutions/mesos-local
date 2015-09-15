@@ -1,4 +1,5 @@
-FROM containersol/dind
+FROM ubuntu:14.04
+
 MAINTAINER Container Solutions BV
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -15,17 +16,18 @@ RUN apt-get update -qq && apt-get upgrade -qq
 # that we have to have that specific version present at runtime.
 
 WORKDIR /tmp
-RUN apt-get install -qqy openjdk-6-jre-headless && \
+RUN apt-get install -qqy openjdk-6-jre-headless curl python2.7 && \
   curl -s -O https://downloads.mesosphere.io/master/ubuntu/14.04/mesos_${VERSION}-${PKG_RELEASE}.ubuntu1404_amd64.deb && \
   dpkg --unpack mesos_${VERSION}-${PKG_RELEASE}.ubuntu1404_amd64.deb && \
   apt-get install -f -y && \
   rm mesos_${VERSION}-${PKG_RELEASE}.ubuntu1404_amd64.deb && \
   apt-get clean
 
-RUN wget -q -O - http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz | tar -xzf - -C /opt \
-    && mv /opt/zookeeper-3.4.6 /opt/zookeeper \
-    && cp /opt/zookeeper/conf/zoo_sample.cfg /opt/zookeeper/conf/zoo.cfg \
-    && mkdir -p /tmp/zookeeper
+RUN curl -s -O http://apache.mirrors.pair.com/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz
+RUN tar -xzf zookeeper-3.4.6.tar.gz -C /opt
+RUN mv /opt/zookeeper-3.4.6 /opt/zookeeper
+RUN cp /opt/zookeeper/conf/zoo_sample.cfg /opt/zookeeper/conf/zoo.cfg
+RUN mkdir -p /tmp/zookeeper
 
 # add script to run cluster
 RUN mkdir /opt/mesos_test_cluster
