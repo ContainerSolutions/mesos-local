@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
 
-# Workaround for https://github.com/jpetazzo/dind/issues/86
-rm -rf /var/lib/docker/btrfs
-
 IFACE='eth0'
 IP=$(ip -4 address show $IFACE | grep 'inet' | sed 's/.*inet \([0-9\.]\+\).*/\1/')
-
 
 echo "" >> /etc/hosts
 
@@ -15,7 +11,6 @@ do
   echo "$IP slave$i" >> /etc/hosts
 
   echo "" >> /etc/supervisor.conf
-
 
   echo "[program:mesos-slave$i]"  >> /etc/supervisor.conf
   echo "user=root"  >> /etc/supervisor.conf
@@ -28,5 +23,3 @@ done
 
 sed -i s/@@NUM_SLAVES@@/${NUMBER_OF_SLAVES}/g /etc/supervisor.conf
 supervisord -c /etc/supervisor.conf -e error
-
-
