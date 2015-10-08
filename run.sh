@@ -7,9 +7,9 @@ echo "" >> /etc/hosts
 
 if [ -z "${MESOS_CREDENTIALS_FILE_CONTENTS}" ]; then
     ${MESOS_CREDENTIALS_FILE_CONTENTS} > /etc/mesos/passwd
-    ${AUTH_ARGUMENTS}='--authenticate=true --credentials=/etc/mesos/passwd'
+    AUTH_ARGUMENTS='--authenticate=true --credentials=/etc/mesos/passwd'
 else
-    ${AUTH_ARGUMENTS}=''
+    AUTH_ARGUMENTS=''
 fi
 
 echo "[program:mesos-master]"  >> /etc/supervisor.conf
@@ -27,7 +27,8 @@ do
 
   echo "[program:mesos-slave$i]"  >> /etc/supervisor.conf
   echo "user=root"  >> /etc/supervisor.conf
-  echo "command=mesos-slave --port=505$i --master=zk://localhost:2181/mesos --work_dir=/var/lib/mesos/$i --no-switch_user --hostname=slave$i --resources=%(ENV_SLAVE${i}_RESOURCES)s"  >> /etc/supervisor.conf
+  RESOURCES_VARIABLE=ENV_SLAVE${i}_RESOURCES
+  echo "command=mesos-slave --port=505$i --master=zk://localhost:2181/mesos --work_dir=/var/lib/mesos/$i --no-switch_user --hostname=slave$i --resources=${!RESOURCES_VARIABLE}"  >> /etc/supervisor.conf
   echo "redirect_stderr=true"  >> /etc/supervisor.conf
   echo "process_name=mesos_slave_$i"  >> /etc/supervisor.conf
   echo "" >> /etc/supervisor.conf
